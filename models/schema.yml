@@ -18,7 +18,8 @@ sources:
              description: the purchase_price of each purchases
 
        - name: raw_gz_sales
-       
+         
+
          description: sales of greenweez/ we have one row per products_id found in each orders_id
          tests:
               - unique:
