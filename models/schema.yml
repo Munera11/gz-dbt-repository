@@ -6,7 +6,6 @@ sources:
     tables:
 
        - name: raw_gz_product
-         
          description: product of greenweez/ we have one row per products_id found in each purchase_price
          columns:
            - name: products_id
@@ -18,8 +17,6 @@ sources:
              description: the purchase_price of each purchases
 
        - name: raw_gz_sales
-         
-
          description: sales of greenweez/ we have one row per products_id found in each orders_id
          tests:
               - unique:
@@ -37,9 +34,7 @@ sources:
              description: the quantity of purchase
            
              
-
-       - name: raw_gz_ship
-         
+       - name: raw_gz_ship  
          description: ship of greenweez/ we have one row per orders_id
          columns:
            - name: orders_id
@@ -53,3 +48,117 @@ sources:
              description: the logcost of the ship
            - name: ship_cost
              description: the ship_cost of shipping
+
+       - name: adwords 
+         identifier: raw_gz_adwords
+         description: adwords table
+         columns:
+           - name: date_date
+             description: date column of table adwords
+           - name: paid_source
+             description: paid_source column of table adwords
+           - name: campaign_key
+             description: campaign_key column of table adwords which is primary key
+             tests:
+                - unique
+                - not_null
+           - name: campaing_name
+             description: campaing_name column of table adwords
+           - name: ads_cost
+             description: ads_cost column of table adwords
+           - name: impression
+             description: impression column of table adwords
+           - name: click
+             description: click column of table adwords
+
+       - name: bing 
+         identifier: raw_gz_bing
+         description: bing table
+         columns:
+           - name: date_date
+             description: date column of table bing
+           - name: paid_source
+             description: paid_source column of table bing
+           - name: campaign_key
+             description: campaign_key column of table bing which is primary key
+             tests:
+                - unique
+                - not_null
+           - name: campaing_name
+             description: campaing_name column of table bing
+           - name: ads_cost
+             description: ads_cost column of table bing
+           - name: impression
+             description: impression column of table bing
+           - name: click
+             description: click column of table bing
+
+
+       - name: criteo
+         identifier: raw_gz_criteo
+         description: criteo table
+         columns:
+           - name: date_date
+             description: date column of table criteo
+           - name: paid_source
+             description: paid_source column of table criteo
+           - name: campaign_key
+             description: campaign_key column of table criteo which is primary key
+             tests:
+                - unique
+                - not_null
+           - name: campaing_name
+             description: campaing_name column of table criteo
+           - name: ads_cost
+             description: ads_cost column of table criteo
+           - name: impression
+             description: impression column of table criteo
+           - name: click
+             description: click column of table criteo
+
+       - name: facebook 
+         identifier: raw_gz_facebook
+         description: facebook table
+         columns:
+           - name: date_date
+             description: date column of table facebook
+           - name: paid_source
+             description: paid_source column of table facebook
+           - name: campaign_key
+             description: campaign_key column of table facebook which is primary key
+             tests:
+                - unique
+                - not_null
+           - name: campaing_name
+             description: campaing_name column of table facebook
+           - name: ads_cost
+             description: ads_cost column of table facebook
+           - name: impression
+             description: impression column of table facebook
+           - name: click
+             description: click column of table facebook
+
+models:
+  - name: finance_campaigns_day
+    description: global kpi
+    columns:
+      - name: ads_margin
+        description: operational margin - ads_cost
+      - name: average_basket
+        description: average basket cost for each day
+    tests:
+      - not_null:
+          column_name:
+            - ads_margin
+            - average_basket
+  
+
+  - name: int_campaigns
+    description: data from all campaigns
+    tests:
+      - unique:
+          column_name: "(campaign_key || '-' || date_date)"
+      - not_null:
+          column_name:
+            - paid_source
+            - campaing_name
